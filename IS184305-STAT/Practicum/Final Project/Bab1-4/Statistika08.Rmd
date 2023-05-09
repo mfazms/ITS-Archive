@@ -1,0 +1,411 @@
+---
+title: "statistika08"
+output: html_document
+date: "2023-04-29"
+---
+
+##UJI RELIABILITAS
+
+#load the data
+```{r}
+dat <- read.csv('DATA-17-RESPONDEN.csv')
+dat
+```
+
+#categorize the data
+```{r}
+library(dplyr)
+kat1<-select(dat,1,2,3,4,5,12,13)
+kat2<-select(dat,7,8,9,10,11,17,18,21,22,23,24,25,26)
+kat3<-select(dat,6,14,15,16,19,20,27,28,29,30,31)
+```
+
+#reliability test each category
+```{r}
+library(psych)
+psych::alpha(kat1)
+psych::alpha(kat2)
+psych::alpha(kat3)
+```
+
+##UJI VALIDITAS
+
+#menghitung total tiap baris
+```{r}
+library(dplyr)
+kat1_total <- kat1 %>%
+mutate(total_col= rowSums(., na.rm=TRUE))
+head(kat1_total)
+```
+```{r}
+library(dplyr)
+kat2_total <- kat2 %>%
+mutate(total_col= rowSums(., na.rm=TRUE))
+head(kat2_total)
+```
+
+```{r}
+library(dplyr)
+kat3_total <- kat3 %>%
+mutate(total_col= rowSums(., na.rm=TRUE))
+head(kat3_total)
+```
+
+#gunakan fungsi korelasi
+```{r}
+res <- cor(kat1_total)
+data.frame(round(res, 3))
+```
+```{r}
+res <- cor(kat2_total)
+data.frame(round(res, 3))
+```
+
+```{r}
+res <- cor(kat3_total)
+data.frame(round(res, 3))
+```
+
+#cara cepat
+
+buat variabel total tiap baris
+
+```{r}
+jmlkat1 <- data.frame(rowSums(kat1))
+jmlkat2 <- data.frame(rowSums(kat2))
+jmlkat3 <- data.frame(rowSums(kat3))
+```
+
+```{r}
+validitas <- function(variabel,jumlah,alpha) {
+p <- ncol(variabel)
+n <- nrow(variabel)
+y <- matrix(,nrow=p,ncol=1)
+for (i in 1:p) {
+y[i,] <- cor(variabel[,i],jumlah)
+}
+y <- as.data.frame(y)
+rtabel <- qt(1-alpha/2,n-2)/sqrt((n-2)+(qt(1-alpha/2,n-2))^2)
+rtabel <- as.data.frame(rep(rtabel,p))
+hasil1 <- cbind(y,rtabel)
+hasil2 <- ifelse(hasil1[,1]>=hasil1[,2],"Item Valid","Item Tidak Valid")
+hasil <- cbind(hasil1,hasil2)
+colnames(hasil) <- c("r hitung","r tabel","Hasil Uji")
+print(hasil)
+}
+```
+jalankan fungsi validitas pada setiap kategori
+kategori 1
+```{r}
+validitas(kat1,jmlkat1,0.05)
+```
+
+kategori 2
+```{r}
+validitas(kat2,jmlkat2,0.05)
+```
+kategori 3
+```{r}
+validitas(kat3,jmlkat3,0.05)
+```
+```{r}
+KMO(dat)
+```
+
+##STATISTIKA DESKRIPTIF
+
+## Mengelompokkan Data
+```{r}
+library(dplyr)
+kat1 <- select(dat, S1,S2,S3,S4,S5,S12,S13)
+kat2 <- select(dat, S7,S8,S9,S10,S11,S17,S18,S21,S22,S23,S24,S25,S26)
+kat3 <- select(dat, S6,S14,S15,S16,S19,S20,S27,S28,S29,S30,S31 )
+dat
+```
+## mencari modus setiap variabel pada kategori 1
+```{r}
+modus <- function(x) {
+  uniqx <- unique(x)
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+modus(kat1$S1)
+modus(kat1$S2)
+modus(kat1$S3)
+modus(kat1$S4)
+modus(kat1$S5)
+modus(kat1$S12)
+modus(kat1$S13)
+```
+
+## mencari modus setiap variabel pada kategori 2
+```{r}
+modus <- function(x) {
+  uniqx <- unique(x)
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+modus(kat2$S7)
+modus(kat2$S8)
+modus(kat2$S9)
+modus(kat2$S10)
+modus(kat2$S11)
+modus(kat2$S17)
+modus(kat2$S18)
+modus(kat2$S21)
+modus(kat2$S22)
+modus(kat2$S23)
+modus(kat2$S24)
+modus(kat2$S25)
+modus(kat2$S26)
+```
+
+## mencari modus setiap variabel pada kategori 3
+```{r}
+modus <- function(x) {
+  uniqx <- unique(x)
+  uniqx[which.max(tabulate(match(x, uniqx)))]
+}
+modus(kat3$S6)
+modus(kat3$S14)
+modus(kat3$S15)
+modus(kat3$S16)
+modus(kat3$S19)
+modus(kat3$S20)
+modus(kat3$S27)
+modus(kat3$S28)
+modus(kat3$S29)
+modus(kat3$S30)
+modus(kat3$S31)
+```
+
+##Melihat min & max dari kategori 1
+```{r}
+a <- min(kat1$S1)
+b <- min(kat1$S2)
+c <- min(kat1$S3)
+d <- min(kat1$S4)
+e <- min(kat1$S5)
+f <- min(kat1$S12)
+g <- min(kat1$S13)
+a
+b
+c
+d
+e
+f
+g
+h <- max(kat1$S1)
+i <- max(kat1$S2)
+j <- max(kat1$S3)
+k <- max(kat1$S4)
+l <- max(kat1$S5)
+m <- max(kat1$S12)
+n <- max(kat1$S13)
+h
+i
+j
+k
+l
+m
+n
+```
+
+##Melihat min & max dari kategori 2
+```{r}
+a <- min(kat2$S7)
+b <- min(kat2$S8)
+c <- min(kat2$S9)
+d <- min(kat2$S10)
+e <- min(kat2$S11)
+f <- min(kat2$S17)
+g <- min(kat2$S18)
+h <- min(kat2$S21)
+i <- min(kat2$S22)
+j <- min(kat2$S23)
+k <- min(kat2$S24)
+l <- min(kat2$S25)
+m <- min(kat2$S26)
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l
+m
+n <- max(kat2$S7)
+o <- max(kat2$S8)
+p <- max(kat2$S9)
+q <- max(kat2$S10)
+r <- max(kat2$S11)
+s <- max(kat2$S17)
+t <- max(kat2$S18)
+u <- max(kat2$S21)
+v <- max(kat2$S22)
+w <- max(kat2$S23)
+x <- max(kat2$S24)
+y <- max(kat2$S25)
+z <- max(kat2$S26)
+n
+o
+p
+q
+r
+s
+t
+u
+v
+w
+x
+y
+z
+```
+
+##Melihat min & max dari kategori 3
+```{r}
+a <- min(kat3$S6)
+b <- min(kat3$S14)
+c <- min(kat3$S15)
+d <- min(kat3$S16)
+e <- min(kat3$S19)
+f <- min(kat3$S20)
+g <- min(kat3$S27)
+h <- min(kat3$S28)
+i <- min(kat3$S29)
+j <- min(kat3$S30)
+k <- min(kat3$S31)
+a
+b
+c
+d
+e
+f
+g
+h
+i
+j
+k
+l <- max(kat3$S6)
+m <- max(kat3$S14)
+n <- max(kat3$S15)
+o <- max(kat3$S16)
+p <- max(kat3$S19)
+q <- max(kat3$S20)
+r <- max(kat3$S27)
+s <- max(kat3$S28)
+t <- max(kat3$S29)
+u <- max(kat3$S30)
+v <- max(kat3$S31)
+l
+m
+n
+o
+p
+q
+r
+s
+t
+u
+v
+```
+
+## melihat min, max, dan range dari variabel 1
+```{r}
+library(pastecs)
+stat.desc(kat1)
+```
+
+## melihat min, max, dan range standar deviasi dari variabel 2
+```{r}
+library(pastecs)
+stat.desc(kat2)
+```
+
+## melihat min, max, dan range standar deviasi dari variabel 3
+```{r}
+library(pastecs)
+stat.desc(kat3)
+```
+
+## melihat rata rata kategori 1 2 3
+```{r}
+summary(kat1)
+summary(kat2)
+summary(kat3)
+```
+
+## mengubah list ke double
+```{r}
+numkat1 <- unlist(kat1)
+numkat1
+numkat2 <- unlist(kat2)
+numkat2
+numkat3 <- unlist(kat3)
+numkat3
+```
+
+## melihat standar deviasi 1 2 3
+```{r}
+sd(numkat1)
+```
+```{r}
+sd(numkat2)
+```
+```{r}
+sd(numkat3)
+```
+
+## melihat mean, dan standar deaviasi dari variabel 1
+```{r}
+library(pastecs)
+stat.desc(kat1)
+```
+## melihat mean, dan standar deaviasi dari variabel 2
+```{r}
+library(pastecs)
+stat.desc(kat2)
+```
+## melihat mean, dan standar deaviasi dari variabel 3
+```{r}
+library(pastecs)
+stat.desc(kat3)
+```
+## kuartil variabel 1
+```{r}
+quantile(numkat1, probs = c(0.25, 0.5, 0.75))
+```
+## kuartil variabel 2
+```{r}
+quantile(numkat2, probs = c(0.25, 0.5, 0.75))
+```
+## kuartil variabel 3
+```{r}
+quantile(numkat3, probs = c(0.25, 0.5, 0.75))
+```
+## stat.desc
+```{r}
+library(pastecs)
+stat.desc(kat1)
+stat.desc(kat2)
+stat.desc(kat3)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
