@@ -1,0 +1,91 @@
+public static void task3(){
+        
+        //your code goes here
+        Scanner ikmal = new Scanner(Main.class.getResourceAsStream("boxingcompetition.txt"));
+        
+        //string declaration
+        String[] csplit;
+        String category;
+        String nama1A = "";
+        String nama1B = "";
+        String nama2A = ""; 
+        String nama2B = "";
+        
+        //int declaration
+        int skor1A = 0;
+        int skor1B = 0;
+        int skor2A = 0;
+        int skor2B = 0;
+        
+        //print header
+        System.out.println("Top Scorer");
+        System.out.println("Category\t\tTop Score\tTop Scorer");
+        System.out.println("--------------------------------------------------");
+        
+        //skip first line
+        ikmal.nextLine();
+        
+        //use hasNextLine() method so the scanner can keep on scanning as long as the document has next line
+        while(ikmal.hasNextLine()){
+        String line = ikmal.nextLine();
+        csplit = line.split(",");
+        category = csplit[2];
+        
+        //use if else to separate score and names for each category
+        //also use if else in order to compare two scores and take the highest score
+        
+        if(category.equals("flyweight")){
+            nama1A = csplit[0];
+            skor1A = Integer.parseInt(csplit[1]);
+            if(skor1A>skor2A){
+                skor2A = skor1A;
+                nama2A = nama1A;
+            }
+        }
+        else if(category.equals("featherweight")){
+            nama1B = csplit[0];
+            skor1B = Integer.parseInt(csplit[1]);
+            if(skor1B>skor2B){
+                skor2B = skor1B;
+                nama2B = nama1B;
+            } 
+        }
+        //the output we get from this is the scores and names from the text but each time it gets a higher score it will repeatedly print the highest score
+        }
+        
+        //because the output repeatedly prints out the highest score, all we need is the final line
+        //in order to get the final line, we have to use scanner(scanner only takes string, so we have to convert the scores to string)
+        
+        String skor3A = "" + skor2A;
+        String skor3B = "" + skor2B;
+        
+        Scanner readscoreA = new Scanner(skor3A);
+        Scanner readscoreB = new Scanner(skor3B);
+        Scanner readnameA = new Scanner(nama2A);
+        Scanner readnameB = new Scanner(nama2B);
+        
+        //declare the final scores and names from the scanner
+        String skorakhirA = "";
+        String skorakhirB = "";
+        String namaakhirA = "";
+        String namaakhirB = "";
+        
+        //use while NextLine to keep scan going until the final line
+        while(readscoreA.hasNextLine()){
+            skorakhirA = readscoreA.nextLine();
+        }
+
+        while(readscoreB.hasNextLine()){
+            skorakhirB = readscoreB.nextLine();
+        }
+        while(readnameA.hasNextLine()){
+            namaakhirA = readnameA.nextLine();
+        }
+        while(readnameB.hasNextLine()){
+            namaakhirB = readnameB.nextLine();
+        }
+        
+    System.out.println("flyweight\t\t" + skorakhirA + "\t\t" + namaakhirA);
+    System.out.println("featherweight\t\t" + skorakhirB + "\t\t" + namaakhirB);
+    }
+}

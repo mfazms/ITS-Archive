@@ -1,0 +1,74 @@
+/**
+ * ES234211 - Basic Programming
+ * Computing Lab. Work
+ * Coursework No.   : 02
+ * Student ID       : 5026221110
+ * Student Name     : Moehammad Fazle Mawla Sidiki
+ * Class            : D
+ * Cohort           : B
+ */
+
+import java.util.Scanner;
+
+public class Main {
+
+    public static void main(String[] args) {
+        task1();
+    }
+    
+    public static void task1(){
+        
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Please input your name \t: ");
+        String name = sc.nextLine();
+        char currency = '$';
+        
+        double priceShirts = 25000;
+        double pricePants = 35000;
+        double priceShoes = 10000;
+        
+        double discountShirts = 0.2;
+        double discountPants = 0.15;
+        double discountShoes = 0.1;
+        
+        int numOfShirts = 4;
+        int numOfPants = 5;
+        int numOfShoes = 2;
+        int numOfItems = numOfShirts + numOfPants + numOfShoes;
+        
+        double totalPrice =  ((numOfShirts*priceShirts) + (numOfPants*pricePants) + (numOfShoes*priceShoes))-((numOfShirts*priceShirts*discountShirts) + (numOfPants*pricePants*discountPants) + (numOfShoes*priceShoes*discountShoes));
+        double cashInHand = 300000;
+        double totalPriceBeforeTax = totalPrice;
+        double tax = 0.075;
+        double totalPriceAfterTax = totalPrice + (totalPrice*tax); 
+        double change = cashInHand - totalPriceAfterTax;
+        char taxcur = '%';
+        double donation = change%1000;
+        
+        System.out.println("-----------------------------------");
+        System.out.println("Total Price: " + totalPrice);
+        System.out.println("Change: " + change);
+        System.out.println("Donation: " + donation);
+        System.out.println("-----------------------------------");
+        System.out.println("Name Of Customer: " + name);
+        System.out.println("ORDERS");
+        System.out.println("Number of items: " + numOfItems);
+        System.out.println("Shirts: " + "\t|\t" + numOfShirts + "\t|\t" + (numOfShirts*priceShirts*discountShirts));
+        System.out.println("Pants: " + "\t\t|\t" + numOfPants + "\t|\t" + (numOfPants*pricePants*discountPants));
+        System.out.println("Shoes: " + "\t\t|\t" + numOfShoes + "\t|\t" + (numOfShoes*priceShoes*discountShoes));
+        System.out.println("Total Before Tax: " + totalPriceBeforeTax);
+        System.out.println("Tax: " + tax*100 + taxcur);
+        System.out.println("Total After Tax: " + totalPriceAfterTax);
+        System.out.println("Amount Paid: " + cashInHand);
+        System.out.println("Change: " + currency + change);
+        System.out.println("Donation Amount: " + currency + donation);
+        System.out.println("-----------------------------------");
+        
+        
+        
+        
+    }
+}
+
+
+//https://docs.google.com/document/d/1-nfUgGNmb9pFC_LmWe4ueiJ6LfkpfQb4rVzkMehG_9s/edit

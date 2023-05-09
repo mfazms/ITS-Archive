@@ -1,0 +1,203 @@
+import java.util.Scanner;
+
+public class cohort_cw5 {
+    public static void main(String[] args) {
+        // task1();
+        // task2();
+        task3();
+    }
+
+    public static void task1() {
+        System.out.println("===========================================");
+        System.out.println("<b> Alpro Medical Diagnostic Centre</b>");
+        System.out.println("-------------------------------------------");
+
+        // getting user input
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Please input your name : ");
+        String name = sc.nextLine();
+
+        System.out.print("Please input your sex ( m / f ) : ");
+        String sex = sc.nextLine();
+
+        System.out.print("Please input your height ( cm ) : ");
+        int height = sc.nextInt();
+        sc.nextLine();
+
+        System.out.print("Please input your weight ( kg ) : ");
+        int weight = sc.nextInt();
+        sc.nextLine();
+
+        // generating output
+        System.out.println("-------------------------------------------");
+
+        String salutation;
+        if (sex.equals("m")) {
+            salutation = "Mr";
+        } else {
+            salutation = "Mrs";
+        }
+
+        // computing Body Mass Index (BMI)
+        double heightInMeter = height / 100.0;
+        double bmi = weight / Math.pow(heightInMeter, 2);
+        String bmiCategory;
+
+        // Based on
+        // https://www.siloamhospitals.com/en/informasi-siloam/artikel/cara-menghitung-bmi
+        if (bmi < 18.5) {
+            bmiCategory = "underweight";
+        } else if (bmi < 24.9) {
+            bmiCategory = "normal";
+        } else if (bmi < 29.9) {
+            bmiCategory = "overweight";
+        } else {
+            bmiCategory = "obese";
+        }
+
+        System.out.println("Customer Name\t: " + salutation + " " + name);
+        System.out.println("BMI\t\t: " + bmi);
+        System.out.println("Category\t: <b><font color='b'>" + bmiCategory + "</b></font>");
+        System.out.println("===========================================");
+        sc.close();
+
+    }
+
+    public static void task2() {
+        System.out.println("============================================");
+        System.out.println("<b> Alpro Medical Diagnostic Centre</b>");
+        System.out.println("--------------------------------------------");
+
+        // declare a varible sc as Scanner data type
+        Scanner sc = new Scanner(System.in);
+
+        // get customer name
+        System.out.print("Please input your name\t: ");
+        String name = sc.nextLine();
+
+        // get customer age
+        System.out.print("Please input your age\t: ");
+        int age = sc.nextInt();
+        sc.nextLine();
+        // Define readFile variable as Scanner data type to read file
+        Scanner readFile = new Scanner(cohort_cw5.class.getResourceAsStream("medicalcheckupresult.txt"));
+        // read line 1 until read 4
+        // String line1 = readFile.nextLine();
+        // String line2 = readFile.nextLine();
+        String line3 = readFile.nextLine();
+        String line4 = readFile.nextLine();
+
+        // read the blood glucose level
+        int glucose = Integer.parseInt(line3.substring(line3.indexOf(':') + 1, line3.length() - 6));
+
+        // determing the blood glucose category
+        String glucoseCategory = "";
+        // Based on
+        // https://www.siloamhospitals.com/informasi-siloam/artikel/kenali-kadar-gula-darah-normal-berdasarkan-usia
+        if (age < 6) {
+            if (glucose >= 100 && glucose <= 200) {
+                glucoseCategory = "Normal";
+            } else {
+                glucoseCategory = "Abnormal";
+            }
+        } else if (age <= 12) {
+            if (glucose >= 70 && glucose <= 150) {
+                glucoseCategory = "Normal";
+            } else {
+                glucoseCategory = "Abnormal";
+            }
+        } else {
+            if (glucose < 100) {
+                glucoseCategory = "Normal";
+            } else {
+                glucoseCategory = "Abnormal";
+            }
+        }
+
+        // read the cholesterol
+        int cholesterol = Integer.parseInt(line4.substring(line4.indexOf(':') + 1, line4.length() - 6));
+        String cholesterolCategory = "";
+        // Adult based on
+        // https://www.honestdocs.id/kadar-kolesterol-normal-total-hdl-ldl-tg
+        if (age > 20) {
+            if (cholesterol < 200) {
+                cholesterolCategory = "Normal";
+            } else if (cholesterol < 240) {
+                cholesterolCategory = "Borderline";
+            } else {
+                cholesterolCategory = "High";
+            }
+        } else {
+            if (cholesterol <= 170) {
+                cholesterolCategory = "Normal";
+            } else if (cholesterol < 200) {
+                cholesterolCategory = "Borderline";
+            } else {
+                cholesterolCategory = "High";
+            }
+        }
+
+        // generating output
+        System.out.println("-------------------------------------------");
+        System.out.println("<b>Medical Checkup Results: </b>");
+        System.out.println("Cust. Name\t: " + name + " (" + age + " yo)");
+        System.out.println(
+                "1.Blood Glucose\t: " + glucose + " <b><font color='blue'>(" + glucoseCategory + ")</font></b>");
+        System.out.println(
+                "2.Cholesterol \t: " + cholesterol + " <b><font color='red'>(" + cholesterolCategory + ")</font></b>");
+        System.out.println("============================================");
+        sc.close();
+    }
+
+    public static void task3() {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter your name: ");
+        String name = sc.nextLine();
+
+        System.out.print("Enter your membership (None/Silver/Gold/Platinum): ");
+        String member = sc.nextLine();
+
+        Scanner readFile = new Scanner(cohort_cw5.class.getResourceAsStream("receipt.txt"));
+        // String line1 = readFile.nextLine();
+        // String line2 = readFile.nextLine();
+        String line3 = readFile.nextLine();
+        String line4 = readFile.nextLine();
+        String line5 = readFile.nextLine();
+        String line6 = readFile.nextLine();
+
+        double belanja1 = Double.parseDouble(line3.substring(line3.indexOf(' ') + 1, line3.length()));
+        double belanja2 = Double.parseDouble(line4.substring(line4.indexOf(' ') + 1, line4.length()));
+        double belanja3 = Double.parseDouble(line5.substring(line5.indexOf(' ') + 1, line5.length()));
+        double belanja4 = Double.parseDouble(line6.substring(line6.indexOf(' ') + 1, line6.length()));
+        double totalAwal = belanja1 + belanja2 + belanja3 + belanja4;
+        double diskon;
+
+        if (member.equals("Platinum")) {
+            diskon = 0.15;
+        } else if (member.equals("Gold")) {
+            diskon = 0.10;
+        } else if (member.equals("Silver")) {
+            diskon = 0.05;
+        } else {
+            diskon = 0.0;
+        }
+        double totalAkhir = totalAwal - (totalAwal * diskon);
+
+        int coupon = (int) totalAkhir / 25000;
+
+        // output
+        System.out.println("You have purchased:");
+        System.out.println(line3);
+        System.out.println(line4);
+        System.out.println(line5);
+        System.out.println(line6);
+        System.out.println("Hi, " + name + "!");
+        System.out.println("Since you are a " + member + ", you get a " + diskon * 100 + "% discount.");
+        System.out.println("Your total purchase value is Rp" + totalAwal + ".");
+        System.out.println("You need to pay Rp" + totalAkhir + ".");
+        System.out.println("Congrats! You get " + coupon + " coupons.");
+        sc.close();
+
+    }
+}

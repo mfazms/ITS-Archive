@@ -1,0 +1,31 @@
+public class Midtest2021 {
+    
+    public static void main(String[] args) {
+        //Problem (1):
+        //Ask the user to enter their name, and store to varibale names
+        
+        System.out.println("Write your code for Problem 1 here!");
+        
+        //Problem (2):
+        //Print out "Hi last name!" for example when the use enter: "Siti Nurhayati Sidabutar", the output will be "Hi Sidaputar!"
+        
+        System.out.println("Write your code for Problem 2 here!");
+        
+        //Problem (3):
+        //Print out the reversed name by word. For example when the use enter: "Siti Nurhayati Sidabutar", the output will be "Sidaputar Nurhayati Siti"
+        
+        System.out.println("Write your code for Problem 3 here!");
+        
+        //Problem (4):
+        //Print out the reversed name by char. For example when the use enter: "Siti Nurhayati Sidabutar", the output will be "Ratudabis Itayahrun Itis"
+        
+        System.out.println("Write your code for Problem 4 here!");
+        
+        //Problem (5):
+        //Print out the encrypted name by shifting 3 letter right, 'a' become 'd', 'f' become 'i', 'y' become 'b', and 'z' become 'c'
+        //For example when the use enter: "Siti Nurhayati Sidabutar", the output will be "Vlwl Qxukdbdwl Vlgdexwdu"
+        
+        System.out.println("Write your code for Problem 5 here!");
+    }
+
+}

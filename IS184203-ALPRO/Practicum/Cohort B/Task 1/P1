@@ -1,0 +1,79 @@
+/**
+ * ES234211 - Basic Programming
+ * Computing Lab. Work
+ * Coursework No.   : 01
+ * Student ID       : 5026221110
+ * Student Name     : Moehammad Fazle Mawla Sidiki
+ * Class            : D
+ * Cohort           : B
+ */
+
+public class Main {
+
+    public static void main(String[] args) {
+        //call method defined under main method
+        task1();
+    
+    }
+    
+    public static void task1(){
+        
+        //declare and initialize the variables
+        
+        int priceOfCoffee = 15000;
+        int priceOfTea = 10000;
+        int priceOfPizza = 45000;
+        char currency = '$';
+        int numOfCoffee = 3;
+        int numOfTea = 5 ;
+        int numOfPizza = 1 ; 
+        String nameOfCustomer = "Albert";
+        
+        double discountOfCoffee = 0.10;
+        double discountOfTea = 0.15;
+        double discountOfPizza = 0.05;
+        double tax = 0.11;
+        double cashInHand = 200000;
+        
+        // count number of items
+        int numOfItems = numOfCoffee + numOfTea + numOfPizza;
+
+        // count the total price
+        double totalPrice = (numOfCoffee*priceOfCoffee) + (numOfTea*priceOfTea) + (numOfPizza*priceOfPizza);
+        // count the total price after tax
+        double totalPriceAfterTax = totalPrice + (totalPrice*tax);
+        // print total price
+        System.out.println("Total Price: "+ currency + totalPrice);
+        
+        // count the change 
+        double change = cashInHand-totalPriceAfterTax;
+        //printing the change
+        System.out.println("Change: " + currency + change);
+
+        // count amount of donation
+        double donation = 417.5;
+        System.out.println("Donation: "+ currency + donation);
+
+         
+        // print the receipt
+        System.out.println("-----------------------------------\n");
+        System.out.println("Name Of Customer: "+ nameOfCustomer);
+        System.out.println("ORDERS");
+        System.out.println("Number of items: "+ numOfItems);
+        System.out.println("Tea\t|\t" + numOfTea + "\t|\t"  + (numOfTea*priceOfTea));
+        System.out.println("Coffee\t|\t" + numOfCoffee + "\t|\t"  + (numOfCoffee*priceOfCoffee));
+        System.out.println("Pizza\t|\t" + numOfPizza + "\t|\t"  + (numOfPizza*priceOfPizza));
+        System.out.println("Total Before Tax: " + totalPrice);
+        System.out.println("Tax: " + tax + "%");
+        System.out.println("Total After Tax:  "+ currency + totalPriceAfterTax);
+        System.out.println("Amount Paid: "+ currency + cashInHand);
+        System.out.println("Change: " + currency + change);
+        System.out.println("Donation Amount: " + currency + donation);
+        System.out.println("-----------------------------------\n");
+    }
+    
+}
+
+
+// https://docs.google.com/document/d/1WqrNlXkexgAYSNuzzZ2vi64c0yBQch7XgWYH0jpJvV8/edit
+

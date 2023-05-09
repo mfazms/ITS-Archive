@@ -1,0 +1,31 @@
+import java.util.Scanner;
+
+public class HandsOn {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(Main.class.getResourceAsStream("SAT.csv"));
+        int s = sc.nextInt();
+        int h = sc.nextInt();
+        sc.nextLine();
+        int numStudents = s + h;
+        int totalScore = 0;
+        int[] score = new int[numStudents];
+        String name = "";
+        for(int i = 0; i < numStudents; i++){
+            String line = sc.nextLine();
+            String[] lineSplit = line.split(",");
+            int m1 = Integer.parseInt(lineSplit[1]);
+            int m2 = Integer.parseInt(lineSplit[2]);
+            int m3 = Integer.parseInt(lineSplit[3]);
+            int m4 = Integer.parseInt(lineSplit[4]);
+            score[i] = m1 + m2 + m3 + m4;
+            totalScore += score[i];
+        }
+        double avg = (double) totalScore / numStudents;
+        int studHigher = 0;
+        for(int i = 0; i < numStudents; i++){
+            if(score[i] > avg) studHigher++;
+        }
+        System.out.println(avg);
+        System.out.println(studHigher);
+    }
+}

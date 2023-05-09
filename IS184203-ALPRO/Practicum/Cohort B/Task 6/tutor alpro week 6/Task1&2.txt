@@ -1,0 +1,120 @@
+public static void task1(){
+        
+        //getting user input
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Please input your name \t: ");
+        String fullName = sc.nextLine();
+        System.out.print("Please input your student id \t: ");
+        String studentid = sc.nextLine();
+        
+        //generating output
+        System.out.println();
+        System.out.println("-------------------------------------------------------------------------------");
+        System.out.println("<b>Academic Report</b>");
+        System.out.println("-------------------------------------------------------------------------------");
+        System.out.println("Student ID.:" + studentid + "\tFullname: " + fullName);
+        System.out.println("===============================================================================");
+        System.out.println("<b>No.\tCode\tName\t\t\t\tCredit\tGrade\tScore\tW.Score</b>");
+        
+        //creating a variable of type Scanner
+        Scanner scFile = new Scanner(Main.class.getResourceAsStream("transcript.csv"));
+        //declare variable to read file per line
+        String line;
+        //declare array variable of String
+        String[] lineSplit;
+        
+        //initialize varibles to store credits, total credits, and total to 0
+        int credit = 0;
+        int totalCredit = 0;
+        double totalScore = 0;
+        
+        //declare and initialize the variables
+        int no=0;
+        String code;
+        String course;
+        String grade;
+        double score;
+        double wscore;
+        
+        // read the file from beginning to the end
+        
+        while(scFile.hasNext()){
+            //read the current line
+            line = scFile.nextLine();
+            //split the current line by comma and save to an array variables
+            lineSplit = line.split(",");
+            
+            code= lineSplit[0];
+            course= lineSplit[1];
+            credit = Integer.parseInt(lineSplit[2]);
+            grade= lineSplit[3];
+            
+            //update the total credit by adding the current line credit
+            totalCredit = totalCredit + credit;
+            
+            score= convertGradeToNumeric(grade);
+            wscore= score*credit;
+            //update the total score by adding the current line weighted score
+            totalScore =  totalScore + wscore;
+            
+            //print out the current line
+            System.out.println(no +"\t"+ code +"\t"+ course +"\t\t"+ grade +"\t"+ credit +"\t"+ score +"\t"+ wscore);
+            //update varible no by 1
+            no++;
+            
+        }
+        System.out.println("-------------------------------------------------------------------------------");
+        
+        double cgpa= totalScore / totalCredit;
+        String category="";
+        if (cgpa >= 2.0)  category="passed";
+        else category="failed";
+        
+        System.out.println("\t\t\t CGPA \t:<b>"+ cgpa +" ("+category+")</b>");
+        System.out.println("-------------------------------------------------------------------------------");
+        
+       
+        
+    }
+    
+    public static double convertGradeToNumeric(String grade){
+        switch(grade){
+            case "A":
+                return 4.0;
+            //complete the code here
+            case "AB":
+                return 3.5;
+            case "B":
+                return 3.0;
+            case "BC":
+                return 2.5;
+            case "C":
+                return 2.0;
+            case "D":
+                return 1.0;
+            case "E":
+                return 0.0;
+        }
+        return 0.0;
+    }
+    
+    public static void task2(){
+        
+        //read the problem.txt file
+        Scanner read = new Scanner(Main.class.getResourceAsStream("problem.txt"));
+        
+        //read the number of accounts
+		int account = read.nextInt();
+		
+		for(int i = 0; i<account; i++){
+		    // count the follower and following
+		    int follower = read.nextInt(); 
+		    int following = read.nextInt();
+		    //generate output
+		    if(following > 1000 && following > (10*follower)){
+		       System.out.println("FAMOUS");
+		    } else {
+		       System.out.println("ORDINARY");
+		    }
+		}
+    }

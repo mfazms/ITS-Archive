@@ -1,0 +1,93 @@
+public static void task3(){
+        
+        //your code goes here
+        Scanner readFile = new Scanner(Main.class.getResourceAsStream("receipt.txt"));
+        
+        String line;
+        String[] lineSplit;
+        String item;
+        String[] commaSplit;
+        
+        String category;
+        String[] itemSplit;
+        
+        String price;
+        double priceA;
+        double savings = 0;
+        double priceShirt = 0;
+        double pricePants = 0;
+        double priceHat = 0;
+        double priceBag = 0;
+        double priceOthers = 0;
+        
+        double pantsDisc = 0.05;
+        
+        int shirtCount = 0;
+        int pantsCount = 0;
+        int hatCount = 0;
+        int bagCount = 0;
+        int othersCount = 0;
+        int totalCount = 0;
+        
+        System.out.println("Receipt");
+        System.out.println("Category Name\t|\tCount\t|\tSubtotal");
+        
+        while(readFile.hasNextLine()){
+            line = readFile.nextLine();
+            
+            commaSplit = line.split(",");
+            
+            item = commaSplit[0];
+            price =  commaSplit[1];
+            priceA = Double.parseDouble(price);
+            
+            category = item.substring(item.lastIndexOf(" "));
+            if(category.contains("Shirt")){
+                shirtCount++;
+                totalCount++;
+                priceShirt = priceShirt + priceA;
+            } 
+            else if(category.contains("Pants")){
+                pantsCount++;
+                totalCount++;
+                pricePants = pricePants + priceA;
+            }
+            else if(category.contains("Hat")){
+                hatCount++;
+                totalCount++;
+                priceHat = priceHat + priceA;
+            }
+            else if(category.contains("Bag")){
+                bagCount++;
+                totalCount++;
+                priceBag = priceBag + priceA;
+            }
+            else{
+                othersCount++;
+                totalCount++;
+                priceOthers = priceOthers + priceA;
+            }
+        }
+        
+        if(pricePants > 1000000){
+            pricePants = pricePants - 100000;
+            savings = (pricePants*pantsDisc) + 100000;
+            pricePants = pricePants - (pricePants*pantsDisc);
+        }
+        
+        int numOfCategory = 5;
+        String[] nameOfCategory = {"Shirts", "Pants", "Hat", "Bag", "Others"};
+        int[] count = {shirtCount, pantsCount, hatCount, bagCount, othersCount}; 
+        double[] subtotal = {priceShirt, pricePants, priceHat, priceBag, priceOthers};
+        
+        for(int i=0;i<numOfCategory;i++){
+            System.out.println(nameOfCategory[i]+"\t\t|\t" + count[i] + "\t|\t" + subtotal[i]);
+        }
+        
+        double totalPrice = priceShirt + pricePants + priceHat + priceBag + priceOthers;
+        
+        System.out.println("Total Item: " + totalCount);
+        System.out.println("Total Price: " + totalPrice);
+        System.out.println("You Saved " + savings + " :)");
+    }
+}
