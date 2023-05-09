@@ -1,0 +1,268 @@
+/**
+ * ES234211 - Basic Programming
+ * Computing Lab. Work
+ * Coursework No.   : 08
+ * Student ID       : 5026221110
+ * Student Name     : Moehammad Fazle Mawla Sidiki
+ * Class            : D
+ * Cohort           : B
+ */
+ import java.util.Scanner;
+ import java.lang.*;
+import java.util.*;
+
+
+public class Main {
+    
+    
+    public static void main(String[] args) {
+        task1();
+        task2();
+        task3();
+    }
+    
+    static void task1(){
+        
+        //read the file
+        Scanner sc = new Scanner (Main.class.getResourceAsStream("matrix.txt"));
+        //get the number of matrix
+        int nm = sc.nextInt();
+        
+        //loop for each matrix
+        for(int i=0; i<nm; i++){
+            //read the number of row and colomn;
+            int row = sc.nextInt();
+            int column = sc.nextInt();
+            
+            //declare the original matrix
+            int [][] matrix = new int[row][column];
+            //declare the transpose matrix
+            int [][]transposeMatrix = new int[column][row];
+            
+            //declare varible to hold the number
+            int val;
+            
+            //assign the number into the 2D matrix
+            for(int n=0; n<row; n++){
+                for(int m=0; m<column; m++){
+                    val = sc.nextInt();
+                    matrix[n][m] = val;
+                    transposeMatrix[m][n] = val;
+                }
+            }
+            
+            // Print the original matrix
+            System.out.println("M:");
+            for(int n=0; n<row; n++){
+                for(int m=0; m<column; m++){
+                    System.out.print(matrix[n][m] + "\t");
+                }
+                System.out.println();
+            }
+            
+            // Print the tranpose matrix
+            System.out.println("M':");
+            for(int n=0; n<column; n++){
+                for(int m=0; m<row; m++){
+                    System.out.print(transposeMatrix[n][m] + "\t");
+                }
+                System.out.println();
+            }
+            System.out.println();
+        }
+        
+    }
+    
+  static void task2(){
+        //read the input file and the number of test case
+        
+        Scanner sc = new Scanner (Main.class.getResourceAsStream("board.txt"));
+        int t = sc.nextInt();
+        //loop for each test case
+        for(int n=0;n<t;n++){
+            
+            //decalre the needed variable
+            int yPosQueen = 0;
+            int xPosQueen = 0;
+            int yPosPawn = 0;
+            int xPosPawn = 0;
+            int[][] board = new int[8][8];
+            
+            //loop to assign the number into 2D array and find the position of queen and Pawn
+            for(int i=0; i<8; i++){
+                for(int j=0; j<8; j++){
+                    //your code goes here
+                    board[i][j] = sc.nextInt();
+                    if(board[i][j] == 1){
+                        xPosQueen = j;
+                        yPosQueen = i;
+                    }
+                    else if(board[i][j] == 2) {
+                        xPosPawn = j;
+                        yPosPawn = i;
+                    }
+             }
+          }
+        
+            //decalare any required variables here
+            boolean isThreatened = false;
+            boolean isCol = false;
+            boolean isRow = false;
+            boolean isDiag = false;
+            int minCol = 0;
+            int maxCol = 0;
+            int minRow = 0;
+            int maxRow = 0;
+            //check whether the pawn is threatened or not
+            if(xPosPawn == xPosQueen) {
+                isCol = true;
+                isThreatened = true;
+                if(yPosPawn>yPosQueen) {
+                    minRow = yPosQueen;
+                    maxRow = yPosPawn;
+                }else{
+                    minRow = yPosPawn;
+                    maxRow = yPosQueen;
+                }
+            }else if(yPosPawn == yPosQueen) {
+                isRow = true;
+                isThreatened = true;
+                if(xPosPawn>xPosQueen) {
+                    minCol = xPosQueen;
+                    maxCol = xPosPawn;
+                }else{
+                    minCol = xPosPawn;
+                    maxCol = xPosQueen;
+                }
+            }else if(Math.abs(xPosPawn-xPosQueen) == Math.abs(yPosPawn-yPosQueen)){
+                isDiag = true;
+                isThreatened = true;
+                if(xPosPawn>xPosQueen) {
+                    minCol = xPosQueen;
+                    maxCol = xPosPawn;
+                }else{
+                    minCol = xPosPawn;
+                    maxCol = xPosQueen;
+                }
+                if(yPosPawn>yPosQueen) {
+                    minRow = yPosQueen;
+                    maxRow = yPosPawn;
+                }else{
+                    minRow = yPosPawn;
+                    maxRow = yPosQueen;
+                }
+            }
+            //your code here
+        //print the chess board if the pawn is threatened by the queen
+        if (isThreatened){
+            System.out.println("YES");
+            for(int i=0; i<8; i++){
+                for(int j=0; j<8; j++){
+                    //your code goes here
+                    if(board[i][j] == 1){
+                        System.out.print("Q" + "\t");
+                    } else if(board[i][j] == 2){
+                        System.out.print("P" + "\t");
+                    } else {
+                         if (isCol && j == xPosQueen && i > minRow && i < maxRow) {
+                                System.out.print("X" + "\t");
+                            } else if (isRow && i == yPosQueen && j > minCol && j < maxCol) {
+                                System.out.print("X" + "\t");
+                            } else if (isDiag && i > minRow && i < maxRow && j > minCol && j < maxCol
+                                    && Math.abs(i - yPosQueen) == Math.abs(j - xPosQueen)) {
+                                System.out.print("X" + "\t");
+                            } else {
+                                System.out.print("0" + "\t");
+                            }
+                    }
+             }
+             System.out.println();
+          }
+        } else {
+            System.out.println("NO");
+        }
+        }
+    } 
+
+public static int cost = 0;
+    public static String path = "";
+    static void task3(){
+        System.out.println();
+        //Input the database using scanner, then declare the needed variable
+        Scanner sc = new Scanner(Main.class.getResourceAsStream("costmatrix.txt"));
+        int maxTest = sc.nextInt();
+        String alphabet = "XABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
+        //This is the 1st looping code.
+        //We need to declare the dimension of matrix and fill the matrix with a value.
+        for(int a = 1; a <= maxTest; a++) {
+            int totalCity = sc.nextInt();
+            int route = totalCity + 1;
+            int[][] cityRoute = new int[route][route];
+
+            for(int b = 0; b <= totalCity; b++){
+                for(int c = 0; c <= totalCity; c++){
+                    cityRoute[b][c] = sc.nextInt();
+                }
+            }
+            //Make the output code that consist of :
+            //1. Iteration of the test case
+            //2. Mapping the cities with their corresponding cost based on the database
+            System.out.println("Test Case :" + a);
+            for(int b = 0; b <= route; b++) {
+                for (int c = 0; c <= route; c++) {
+                    if (b == 0 && c == 0) {
+                        System.out.print("  ");
+                    } else if (b == 0) {
+                        System.out.print(alphabet.charAt(c - 1) + " ");
+                    } else if (c == 0) {
+                        System.out.print(alphabet.charAt(b - 1) + " ");
+                    } else {
+                        for (int d = 0; d <= totalCity; d++) {
+                            System.out.print(cityRoute[b - 1][d] + " ");
+                        }
+                        break;
+                    }
+                }
+                System.out.println();
+            }
+
+            //Analyzing the best route with recursive, then print out the best route
+            boolean[] e = new boolean[route];
+            e[0] = true;
+            int ans = Integer.MAX_VALUE;
+            ans = tsp(cityRoute, e, 0, totalCity + 1, 1, 0, ans, "");
+            System.out.print("Best Route:X--");
+            for(int j = 0; j < Main.path.length(); j++) System.out.print(Main.path.charAt(j) + "--");
+            System.out.println("X (" + Main.cost + ")");
+        }
+    }
+    static int tsp(int[][] graph, boolean[] e, int currentPos, int totalCity, int count, int cost, int ans, String path) {
+        String alphabet = "XABCDEFGHIJKLMNOPQRSTUVWXYZ";
+        //if reached last node (city) and last node has link to starting node (X), go back to check more possible best value
+        if (count == totalCity && graph[currentPos][0] > 0) {
+            //ans = Math.min(ans, cost + graph[currPos][0]);
+            if(ans > cost + graph[currentPos][0]){
+                ans = cost + graph[currentPos][0];
+                Main.path = path;
+                return ans;
+            } else {
+                return ans;
+            }
+        }
+        // BACKTRACKING STEP :
+        // Loop to traverse the adjacency list of currPos node and increasing the count by 1 and cost by graph[currentPos,i] value
+        for (int a = 0; a < totalCity; a++) {
+            if (e[a] == false && graph[currentPos][a] > 0) {
+                // Mark as visited
+                e[a] = true;
+                ans = tsp(graph, e, a, totalCity, count + 1, cost + graph[currentPos][a], ans, path + "" + alphabet.charAt(a));
+                // Mark as unvisited
+                e[a] = false;
+            }
+        }
+        Main.cost = ans;
+        return ans;
+    }
+
+}
